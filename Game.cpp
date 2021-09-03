@@ -31,14 +31,17 @@ bool Game::SetPlayers()
 
 	m_playerO = Player(player1, Mark::O);
 	m_playerX = Player(player2, Mark::X);
+	m_activePlayer = Player();
 
 	//setting random starting player
 	srand(static_cast<unsigned>(time(NULL)));
 	if (rand() % 2 == 0) {
-		m_activePlayer = m_playerO;
+		m_activePlayer.ChangeName(m_playerO.GetName());
+		m_activePlayer.ChangeMark(m_playerO.GetMark());
 	}
 	else {
-		m_activePlayer = m_playerX;
+		m_activePlayer.ChangeName(m_playerX.GetName());
+		m_activePlayer.ChangeMark(m_playerX.GetMark());
 	}
 
 
@@ -51,6 +54,7 @@ bool Game::CheckIfWin(Mark mark)
 	int sideLength = m_board.GetSideLength();
 	int marksNumber;
 
+	//check rows
 	for (int i = 0; i < sideLength; ) {
 		marksNumber = 0;
 		for (int j = 0; j < sideLength; j++) {
@@ -63,6 +67,7 @@ bool Game::CheckIfWin(Mark mark)
 		else { marksNumber = 0; i++; }
 	}
 
+	//check columns
 	for (int i = 0; i < sideLength; ) {
 		marksNumber = 0;
 		for (int j = 0; j < sideLength; j++) {
@@ -77,6 +82,7 @@ bool Game::CheckIfWin(Mark mark)
 
 	}
 
+	//check top-left to bottom-right diagonal
 	marksNumber = 0;
 
 	for (int i = 0; i < sideLength; i++) {
@@ -88,6 +94,7 @@ bool Game::CheckIfWin(Mark mark)
 	}
 	if (marksNumber == sideLength) { return true; }
 
+	//check top-right to bottom-left diagonal
 	marksNumber = 0;
 
 	for (int i = 0; i < sideLength; i++) {
@@ -130,8 +137,14 @@ bool Game::PlayerTurn()
 
 	m_board.DrawBoard();
 
-	if (m_activePlayer.GetMark() == Mark::O) m_activePlayer = m_playerX;
-	else m_activePlayer = m_playerO;
+	if (m_activePlayer.GetMark() == Mark::O) {
+		m_activePlayer.ChangeName(m_playerX.GetName());
+		m_activePlayer.ChangeMark(m_playerX.GetMark());
+	}
+	else {
+		m_activePlayer.ChangeName(m_playerO.GetName());
+		m_activePlayer.ChangeMark(m_playerO.GetMark());
+	}
 	return true;
 }
 

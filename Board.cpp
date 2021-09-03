@@ -3,11 +3,10 @@
 #include <iostream>
 #include "Converter.h"
 
-Board::Board()
+Board::Board():
+	m_SideLength{ DEFAULT },
+	m_TotalSize{ m_SideLength * m_SideLength }
 {
-	m_SideLength = DEFAULT;
-	m_TotalSize = m_SideLength * m_SideLength;
-
 	for (int i = 0; i < m_SideLength; i++) {
 		for (unsigned j = 0; j < m_SideLength; j++) {
 			m_Board[i][j] = Mark::NTH;

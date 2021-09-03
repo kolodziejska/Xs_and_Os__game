@@ -12,12 +12,20 @@ public:
 
 	Player();
 
-	Player(std::string name, Mark mark);
+	Player(const std::string &name, const Mark &mark);
 
 	~Player();
 
 	std::string GetName();
 
 	Mark GetMark();
+
+	void ChangeName(const std::string &name) {
+		m_Name = name;
+	}
+
+	void ChangeMark(const Mark &mark) {
+		m_mark = mark;
+	}
 };
 
